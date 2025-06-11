@@ -4,6 +4,7 @@ from cake_repo import (CakesRepo,
                        insert_into,
                        get_cakes,
                        get_cake_by_id)
+import requests
 
 
 cakes_repo = CakesRepo()
@@ -29,3 +30,10 @@ cake_by_id = get_cake_by_id(2)
 print()
 print(cake_by_id)
 print()
+
+
+
+response = requests.get('https://jsonplaceholder.typicode.com/users/1')
+user_dict = response.json()
+
+print(user_dict['name'])
