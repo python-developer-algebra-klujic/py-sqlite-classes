@@ -44,7 +44,7 @@ def insert_into(cake: Cake):
 
 
 
-# Get from table
+# Get all from table
 get_sql = '''
 SELECT * FROM cakes
 '''
@@ -60,3 +60,22 @@ def get_cakes():
     # Zato sto je svaki element liste s podacima iz baze tipa tuple,
     # moramo ga konvertirati u objekt klase Cake
     return list(map(lambda cake: Cake(cake[1], cake[2], cake[3]), cakes))
+
+
+# Get one from table
+get_sql_by_id = '''
+SELECT * FROM cakes WHERE id = ?
+'''
+
+def get_cake_by_id(id: int):
+    conn = sqlite3.connect('cakes_db.sqlite')
+    cursor = conn.cursor()
+
+    cursor.execute(get_sql_by_id, (id,))
+    cake = cursor.fetchone()
+    conn.close()
+
+    # Zato sto je svaki element liste s podacima iz baze tipa tuple,
+    # moramo ga konvertirati u objekt klase Cake
+    return Cake(cake[1], cake[2], cake[3])
+
